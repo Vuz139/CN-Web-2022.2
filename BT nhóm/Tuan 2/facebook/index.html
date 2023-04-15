@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/HTML/w3_band/assets/font/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="logo">
+            <img src="./img/fb_logo.svg" alt="Facebook" class="img-logo">
+        </div>
+
+        <div class="form-content">
+            <div class="form">
+                <h2 class="title">Create a new account</h2>
+                <p class="title-desc">It's quick and easy</p>
+
+                <form action="" class="form-data">
+                    <div class="input">
+                        <input type="text" class="col col-half field-input" placeholder="First name" name="first-name">
+                        <input type="text" class="col col-half field-input" placeholder="Surname" name="sur-name">
+                        <input type="text" class="col col-full field-input" placeholder="Mobile number or email address"
+                            name="contact">
+                        <input type="password" class="col col-full field-input" placeholder="New password"
+                            name="password">
+                    </div>
+
+
+                    <p class="sub-title">Date of birth
+                        <i class="ti-help-alt"></i>
+                    </p>
+                    <select name="date_day" id="date__day">
+
+                    </select>
+                    <select name="date_month" id="date__month">
+                        <option value="Jar">Jar</option>
+                        <option value="Feb">Feb</option>
+                        <option value="Mar">Mar</option>
+                        <option value="Apr">Apr</option>
+                        <option value="May">May</option>
+                        <option value="Jun">Jun</option>
+                        <option value="Jul">Jul</option>
+                        <option value="Aug">Aug</option>
+                        <option value="Sep">Sep</option>
+                        <option value="Oct">Oct</option>
+                        <option value="Nov">Nov</option>
+                        <option value="Dec">Dec</option>
+                    </select>
+                    <select name="date_year" id="date__year">
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                        <option value="2014">2014</option>
+                        <option value="2013">2013</option>
+                        <option value="2012">2012</option>
+                        <option value="2011">2011</option>
+                        <option value="2010">2010</option>
+                        <option value="2009">2009</option>
+                        <option value="2008">2008</option>
+                        <option value="2007">2007</option>
+                        <option value="2006">2006</option>
+                        <option value="2005">2005</option>
+                        <option value="2004">2004</option>
+
+                    </select>
+
+                    <p class="sub-title">Gender
+                        <i class="ti-help-alt"></i>
+                    </p>
+                    <div class="gender-div">
+                        <div class="gender-infor">
+                            <label for="female" class="gender">Female</label>
+                            <input type="radio" value="female" name="gender">
+                        </div>
+                        <div class="gender-infor">
+                            <label for="male" class="gender">Male</label>
+                            <input type="radio" value="male" name="gender">
+                        </div>
+                        <div class="gender-infor">
+                            <label for="other" class="gender">Custom</label>
+                            <input type="radio" value="other" name="gender">
+                        </div>
+                    </div>
+                    <div class="about-policy">
+                        <p class="about">People who use out service may have uploaded your contact information to
+                            Facebook.
+                            <a href="#">Learn more.</a>
+                        </p>
+                        <p class="about">By clicking Sign Up, you agree to our <a href="#">Terms, Privacy Policy </a>and
+                            <a href="#">Cookies Policy.</a> You may receive SMS notifications from us and can opt out at
+                            any
+                            time.
+                        </p>
+                    </div>
+
+                    <div class="sign-up">
+                        <input type="button" value="Sign Up" class="sign-up-btn"> <br>
+                        <a href="#" class="have-acount">Already have an acount?</a>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var genders = document.getElementsByName('gender')
+        function setNoneValue() {
+            genders.forEach(function (value) {
+                value.checked = false;
+            })
+        }
+
+        genders.forEach(function (value) {
+            if (value.checked) {
+                setNoneValue();
+            }
+            value.checked = true;
+        });
+
+        const labelGenders = document.querySelectorAll('.gender');
+        labelGenders.forEach(function (value, index) {
+            value.addEventListener('click', () => {
+                genders[index].checked = true;
+            })
+        })
+
+        var daysElm = document.getElementsByName('date_day');
+        console.log(daysElm);
+        var inner = ``;
+        for (let i = 1; i <= 31; i++) {
+            inner += `<option value='${i}'>${i}</option>
+`;
+        }
+        console.log(inner);
+        daysElm[0].innerHTML = inner;
+
+
+    </script>
+
+
+</body>
+
+</html>
