@@ -54,6 +54,11 @@
         line-height: 1.6;
         font-size: 16px;
     }
+    .blog_createdAt{
+        font-size: 12px;
+        font-weight: 300;
+        margin-top: 8px;
+    }
     .blog_deleteBtn{
         position: absolute;
         bottom: 4px;
@@ -88,6 +93,7 @@
         <div class="blog_content">
             <h2 class="blog_title"><%= data[i].title %></h2>
             <p class="blog_body"><%= data[i].body %></p>
+            <p class="blog_createdAt">Time: <%= data[i].createdAt  %></p>
         </div>
         <button datasetId = '<%= data[i]._id %>' class="blog_deleteBtn">Xóa</button>
    </div>

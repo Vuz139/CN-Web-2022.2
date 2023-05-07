@@ -3,7 +3,7 @@ const blogService = require("../services/BlogService");
 exports.getAllBlogs = async (req, res) => {
 	try {
 		const blogs = await blogService.getAllBlogs();
-		console.log(blogs);
+		// console.log(blogs);
 		const data = blogs;
 		res.render("Blog", {
 			data,
