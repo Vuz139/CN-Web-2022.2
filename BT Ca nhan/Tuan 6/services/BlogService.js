@@ -1,7 +1,7 @@
 const BlogModel = require("../models/Blog");
 
-exports.getAllBlogs = async () => {
-	return await BlogModel.find();
+exports.getAllBlogs = async (skip = 0, limit = 9999) => {
+	return await BlogModel.find().limit(limit).skip(skip);
 };
 
 // create a new blog
