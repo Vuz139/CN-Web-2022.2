@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				font-family: sans-serif;
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				height: 100vh;
+				display: flex;
+				overflow: auto;
+			}
+			.wrapper {
+				margin: auto;
+				display: flex;
+				gap: 12px;
+				min-width: 80vw;
+				border: 1px solid #ccc;
+				min-height: 90vh;
+				border-radius: 8px;
+				padding: 16px;
+			}
+			.current-chat {
+				background-color: aquamarine !important;
+			}
+			#users-online {
+				min-width: 100px;
+				max-height: 80vh;
+				overflow-y: auto;
+				margin-right: 12px;
+			}
+			.user {
+				padding: 8px;
+
+				font-size: 16px;
+				cursor: pointer;
+			}
+			.user:hover {
+				background-color: aquamarine;
+				color: red;
+			}
+			.conversation {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+
+			#input {
+				margin: 8px;
+				padding: 8px;
+				border-radius: 8px;
+				border: 1px solid #ccc;
+
+				outline: 1px solid #ccc;
+			}
+			button {
+				padding: 8px;
+				border: none;
+				background-color: yellowgreen;
+				border-radius: 8px;
+				font-size: 18px;
+				color: white;
+				cursor: pointer;
+			}
+			button:hover {
+				scale: calc(1.4);
+			}
+			ul {
+				margin-top: 12px;
+				list-style: none;
+			}
+			#messages {
+				flex: 1;
+				border: 2px solid #ccc;
+				padding: 8px;
+				border-radius: 8px;
+				overflow-y: auto;
+			}
+			li {
+				margin: 8px 4px;
+				font-size: 16px;
+				background-color: blue;
+				color: white;
+				padding: 20px;
+				border-radius: 12px;
+				min-width: 80px;
+			}
+			li.my-msg {
+				background-color: aquamarine;
+				color: rgb(45, 8, 8);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div>
+				<h2>User onlines</h2>
+				<ul id="users-online"> </ul>
+			</div>
+			<div class="conversation">
+				<h1 id="yourname">Name: Vuz1309</h1>
+				<form id="form">
+					<p
+						>Nhập tin nhắn:
+						<input type="text" autocomplete="off" id="input"
+					/></p>
+					<button>Send</button>
+				</form>
+				<ul id="messages"> </ul>
+			</div>
+		</div>
+
+		<script src="/socket.io/socket.io.js"></script>
+
+		<script>
+			const socket = io();
+			window.addEventListener("load", function (event) {
+				socket.emit("addUser");
+			});
+			const messages = document.getElementById("messages");
+			const form = document.getElementById("form");
+			const input = document.getElementById("input");
+			const name = document.getElementById("yourname");
+			const users = document.getElementById("users-online");
+
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+				if (input.value) {
+					const currentChat = document.querySelector(".current-chat");
+					if (!currentChat) alert("Chọn người bạn muốn nhắn tin");
+					const name = currentChat.innerHTML;
+
+					socket.emit("chat", input.value, name);
+					input.value = "";
+				}
+			});
+
+			socket.on("sendMsg", (from, msg) => {
+				const item = document.createElement("li");
+				if (name.innerHTML.includes(from)) {
+					item.className = "my-msg";
+				}
+				item.textContent = `${from}: ${msg}`;
+				messages.appendChild(item);
+				window.scrollTo(0, document.body.scrollHeight);
+			});
+			socket.on("username", (username) => {
+				name.innerHTML = "Name: " + username;
+			});
+			socket.on("wakeUp", () => {
+				const myName = name.innerHTML.split(": ")[1];
+
+				socket.emit("online", myName);
+			});
+			socket.on("sendUsersOn", (usersOn) => {
+				let lllll = "";
+				for (const user of usersOn) {
+					if (!name.innerHTML.includes(user.user))
+						lllll += `<li class="user">${user.user}</li> `;
+				}
+
+				users.innerHTML = lllll;
+				const listUsersOn = document.getElementsByClassName("user");
+
+				function handleClickUser(e) {
+					for (const user of listUsersOn) {
+						user.className = "user";
+					}
+					e.target.className = "user current-chat";
+				}
+
+				for (const user of listUsersOn) {
+					user.addEventListener("click", handleClickUser);
+				}
+			});
+		</script>
+	</body>
+</html>
