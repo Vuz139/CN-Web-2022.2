@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>Chat App</title>
 		<style>
 			* {
 				font-family: sans-serif;
@@ -23,7 +23,7 @@
 				gap: 12px;
 				min-width: 80vw;
 				border: 1px solid #ccc;
-				min-height: 90vh;
+				height: 90vh;
 				border-radius: 8px;
 				padding: 16px;
 			}
@@ -49,6 +49,7 @@
 			.conversation {
 				flex: 1;
 				display: flex;
+				height: 100%;
 				flex-direction: column;
 			}
 
@@ -80,6 +81,7 @@
 				flex: 1;
 				border: 2px solid #ccc;
 				padding: 8px;
+				height: 100%;
 				border-radius: 8px;
 				overflow-y: auto;
 			}
@@ -92,9 +94,47 @@
 				border-radius: 12px;
 				min-width: 80px;
 			}
-			li.my-msg {
-				background-color: aquamarine;
+			.message-wrapper {
+				width: 100%;
+				display: flex;
+			}
+			.message-wrapper.my-msg {
+				justify-content: flex-end;
+			}
+			#messages li {
+				background-color: white;
+				max-width: 65%;
+				display: flex;
+				flex-direction: column;
+			}
+			#messages li.my-msg {
+				/* flex-direction: row-reverse; */
+				/* background-color: rgb(222, 222, 222); */
 				color: rgb(45, 8, 8);
+			}
+			.user-send {
+				display: inline-block;
+				font-size: 16px;
+				text-decoration-line: underline;
+				padding: 8px;
+				border: 1px solid #ccc;
+				border-radius: 20px;
+				text-align: center;
+				color: black;
+			}
+			.msg-body {
+				padding: 12px;
+				border-radius: 12px;
+				background-color: blue;
+				color: white;
+				margin-top: 8px;
+				margin-left: 30px;
+			}
+			#messages li.my-msg .msg-body {
+				display: block;
+				margin-left: 0px;
+				background-color: rgb(103, 171, 0);
+				margin-right: 30px;
 			}
 		</style>
 	</head>
@@ -135,20 +175,26 @@
 				if (input.value) {
 					const currentChat = document.querySelector(".current-chat");
 					if (!currentChat) alert("Chọn người bạn muốn nhắn tin");
-					const name = currentChat.innerHTML;
+					else {
+						const name = currentChat.innerHTML;
 
-					socket.emit("chat", input.value, name);
-					input.value = "";
+						socket.emit("chat", input.value, name);
+						input.value = "";
+					}
 				}
 			});
 
 			socket.on("sendMsg", (from, msg) => {
+				const messageWrapper = document.createElement("div");
+				messageWrapper.className = "message-wrapper";
 				const item = document.createElement("li");
+				messageWrapper.appendChild(item);
 				if (name.innerHTML.includes(from)) {
+					messageWrapper.className = "message-wrapper my-msg";
 					item.className = "my-msg";
 				}
-				item.textContent = `${from}: ${msg}`;
-				messages.appendChild(item);
+				item.innerHTML = `<span class='user-send' >${from}</span><span class='msg-body'>${msg}</span>`;
+				messages.appendChild(messageWrapper);
 				window.scrollTo(0, document.body.scrollHeight);
 			});
 			socket.on("username", (username) => {
@@ -156,7 +202,6 @@
 			});
 			socket.on("wakeUp", () => {
 				const myName = name.innerHTML.split(": ")[1];
-
 				socket.emit("online", myName);
 			});
 			socket.on("sendUsersOn", (usersOn) => {
