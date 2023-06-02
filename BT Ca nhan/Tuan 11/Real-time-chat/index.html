@@ -5,6 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Chat App</title>
+		<link rel="stylesheet" href="style.css" />
 		<style>
 			* {
 				font-family: sans-serif;
@@ -94,6 +95,9 @@
 				border-radius: 12px;
 				min-width: 80px;
 			}
+			#yourname {
+				text-align: center;
+			}
 			.message-wrapper {
 				width: 100%;
 				display: flex;
@@ -108,8 +112,6 @@
 				flex-direction: column;
 			}
 			#messages li.my-msg {
-				/* flex-direction: row-reverse; */
-				/* background-color: rgb(222, 222, 222); */
 				color: rgb(45, 8, 8);
 			}
 			.user-send {
@@ -136,6 +138,23 @@
 				background-color: rgb(103, 171, 0);
 				margin-right: 30px;
 			}
+
+			#messages::-webkit-scrollbar {
+				display: none;
+			}
+
+			#messages {
+				scrollbar-width: thin;
+				scrollbar-color: #888888 #f0f0f0;
+			}
+
+			#messages::-webkit-scrollbar-thumb {
+				background-color: #888888;
+			}
+
+			#messages::-webkit-scrollbar-track {
+				background-color: #f0f0f0;
+			}
 		</style>
 	</head>
 	<body>
@@ -145,7 +164,7 @@
 				<ul id="users-online"> </ul>
 			</div>
 			<div class="conversation">
-				<h1 id="yourname">Name: Vuz1309</h1>
+				<h1 id="yourname">YourName: Vuz1309</h1>
 				<form id="form">
 					<p
 						>Nhập tin nhắn:
@@ -195,10 +214,11 @@
 				}
 				item.innerHTML = `<span class='user-send' >${from}</span><span class='msg-body'>${msg}</span>`;
 				messages.appendChild(messageWrapper);
+				messages.scrollTop = messageWrapper.offsetTop;
 				window.scrollTo(0, document.body.scrollHeight);
 			});
 			socket.on("username", (username) => {
-				name.innerHTML = "Name: " + username;
+				name.innerHTML = "YourName: " + username;
 			});
 			socket.on("wakeUp", () => {
 				const myName = name.innerHTML.split(": ")[1];
