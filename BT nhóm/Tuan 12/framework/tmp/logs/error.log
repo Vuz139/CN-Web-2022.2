@@ -1,0 +1,22 @@
+[12-Jun-2023 14:49:46 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in C:\xampp\htdocs\framework\library\sqlquery.class.php:23
+Stack trace:
+#0 C:\xampp\htdocs\framework\library\sqlquery.class.php(23): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue))
+#1 C:\xampp\htdocs\framework\library\vanillamodel.class.php(9): SQLQuery->connect('localhost', 'root', '', 'framework')
+#2 C:\xampp\htdocs\framework\library\vanillacontroller.class.php(22): VanillaModel->__construct()
+#3 C:\xampp\htdocs\framework\library\shared.php(99): VanillaController->__construct('categories', 'index')
+#4 C:\xampp\htdocs\framework\library\shared.php(156): callHook()
+#5 C:\xampp\htdocs\framework\library\bootstrap.php(6): require_once('C:\\xampp\\htdocs...')
+#6 C:\xampp\htdocs\framework\public\index.php(8): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+  thrown in C:\xampp\htdocs\framework\library\sqlquery.class.php on line 23
+[12-Jun-2023 14:49:49 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in C:\xampp\htdocs\framework\library\sqlquery.class.php:23
+Stack trace:
+#0 C:\xampp\htdocs\framework\library\sqlquery.class.php(23): mysqli_connect('localhost', 'root', Object(SensitiveParameterValue))
+#1 C:\xampp\htdocs\framework\library\vanillamodel.class.php(9): SQLQuery->connect('localhost', 'root', '', 'framework')
+#2 C:\xampp\htdocs\framework\library\vanillacontroller.class.php(22): VanillaModel->__construct()
+#3 C:\xampp\htdocs\framework\library\shared.php(99): VanillaController->__construct('categories', 'index')
+#4 C:\xampp\htdocs\framework\library\shared.php(156): callHook()
+#5 C:\xampp\htdocs\framework\library\bootstrap.php(6): require_once('C:\\xampp\\htdocs...')
+#6 C:\xampp\htdocs\framework\public\index.php(8): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+  thrown in C:\xampp\htdocs\framework\library\sqlquery.class.php on line 23
